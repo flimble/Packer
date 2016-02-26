@@ -55,62 +55,62 @@ You need a very elaborate set of of roles to push to VSphere (see below) to run 
 These are courtesy of [this blog](http://www.virtxpert.com/creating-vcenter-role-vsphere-vagrant-provider/). You may also need read on ALL the data centers too.
 
 Role settings
-– Datastore
-	– Allocate space
-	– Browse datastore
-	– Remove file
-	– Update virtual machine file
-– Global
-	– Log event
-	– Cancel task
-– Host
-	– Create virtual machine
-	– Delete virtual machine
-	– Reconfigure virtual machine
-– Network
-	– Assign network
-– Resource
-	– Assign virtual machine to resource pool
-– Tasks
-	– Create task
-	– Update task
-– Virtual machine
-	– Configuration
-		– Add new disk
-		– Add or remove device
-		– Advanced
-		– Change CPU count
-		– Change resource
-		– Configure ManagedBy
-		– Memory
-		– Modify device settings
-		– Remove disk
-		– Rename
-		– Settings
-		– Swap file placement
-– Guest operations
-	– Guest Operations Modifications
-– Interaction
-	– Power on
-	– Power off
-	– Reset
-	– Suspend
-	– VMware Tools install
-– Inventory
-	– Create from existing
-	– Create new
-	– Move
-	– Register
-	– Remove
-	– Unregister
-– Provisioning
-	– Allow disk access
-	– Clone template
-	– Clone virtual machine
-	– Customize
-	– Deploy template
-	– Mark as virtual machine
-	– Read customization speceifications
+–Datastore
+	–Allocate space
+	–Browse datastore
+	–Remove file
+	–Update virtual machine file
+–Global
+	–Log event
+	–Cancel task
+–Host
+	–Create virtual machine
+	–Delete virtual machine
+	–Reconfigure virtual machine
+–Network
+	–Assign network
+–Resource
+	–Assign virtual machine to resource pool
+–Tasks
+	–Create task
+	–Update task
+–Virtual machine
+	–Configuration
+		–Add new disk
+		–Add or remove device
+		–Advanced
+		–Change CPU count
+		–Change resource
+		–Configure ManagedBy
+		–Memory
+		–Modify device settings
+		–Remove disk
+		–Rename
+		–Settings
+		–Swap file placement
+–Guest operations
+	–Guest Operations Modifications
+–Interaction
+	–Power on
+	–Power off
+	–Reset
+	–Suspend
+	–VMware Tools install
+–Inventory
+	–Create from existing
+	–Create new
+	–Move
+	–Register
+	–Remove
+	–Unregister
+–Provisioning
+	–Allow disk access
+	–Clone template
+	–Clone virtual machine
+	–Customize
+	–Deploy template
+	–Mark as virtual machine
+	–Read customization speceifications
 
 ### Starting a new vSphere VM from the template
 
