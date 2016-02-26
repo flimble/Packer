@@ -16,6 +16,7 @@
       "winrm_username": "vagrant",
       "winrm_password": "vagrant",
       "winrm_port" : "5985",
+      "winrm_timeout" : "120m",
       "floppy_files": [
         "./answer_files/2012_r2_web/Autounattend.xml",
         "./answer_files/2012_r2_web/Autounattend-sysprep.xml",
