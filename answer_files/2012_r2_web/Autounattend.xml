@@ -124,9 +124,15 @@
                     <RequiresUserInput>false</RequiresUserInput>
             </SynchronousCommand>
             <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\vmware-tools.ps1</CommandLine>
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\install-vmwaretools.ps1</CommandLine>
                     <Description>Install VMWare tools as Packer tries and fails</Description>
                     <Order>2</Order>
+                    <RequiresUserInput>false</RequiresUserInput>
+            </SynchronousCommand>
+            <SynchronousCommand wcm:action="add">
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\install-windowsupdates.ps1</CommandLine>
+                    <Description>Install Windows updates</Description>
+                    <Order>3</Order>
                     <RequiresUserInput>false</RequiresUserInput>
             </SynchronousCommand>
             </FirstLogonCommands>
