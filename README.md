@@ -1,7 +1,12 @@
 # Packer
 This repository is a set of [Packer](packer.io) files for creating Windows 2012 R2 templates on VMWare/vSphere.
 
-### The Windows Packer journey
+### Getting started
+
+Make sure the MSDN Windows 2012 R2 ISO is in the /iso/ folder ("en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso"), and then 
+run build-web.ps1 in a new powershell prompt.
+
+### The story of the Packer journey
 
 
 
