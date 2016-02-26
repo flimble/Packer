@@ -1,5 +1,5 @@
 # Give it SSH
-choco install win32-openssh -params '"/SSHServerFeature"'
+#choco install win32-openssh -params '"/SSHServerFeature"'
 
 # This script is pending a tidy up
 #################################################################################

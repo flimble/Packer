@@ -20,7 +20,6 @@
         "./answer_files/2012_r2_web/Autounattend.xml",
         "./answer_files/2012_r2_web/Autounattend-sysprep.xml",
         "./scripts/shared/enable-winrm.ps1",
-        "./scripts/shared/install-vmwaretools.ps1",
         "./scripts/shared/install-windowsupdates.ps1",
         "./scripts/shared/sysprep-tools.ps1"
       ],
@@ -37,6 +36,7 @@
   {
     "type": "powershell",
     "scripts": [
+      "./scripts/shared/install-vmwaretools.ps1",
       "./scripts/shared/install-chocolatey.ps1",
       "./scripts/web/install-winfeatures.ps1",
       "./scripts/shared/install-sysprep.ps1"
