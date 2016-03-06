@@ -18,12 +18,12 @@
                         <CreatePartition wcm:action="add">
                             <Type>Primary</Type>
                             <Order>1</Order>
-                            <Size>350</Size>
+                            <Size>61440</Size>
                         </CreatePartition>
                         <CreatePartition wcm:action="add">
                             <Order>2</Order>
                             <Type>Primary</Type>
-                            <Size>40960</Size>
+                            <Size>20480</Size>
                         </CreatePartition>
 						<CreatePartition wcm:action="add">
                             <Order>3</Order>
