@@ -1,5 +1,6 @@
 # To verify the installation this could use Get-WindowsFeature
 Write-Host "Installing Web server role features (IIS, MSMQ, .NET 4.5)"
+Install-WindowsFeature NET-Framework-Core
 Install-WindowsFeature Web-Server -IncludeAllSubFeature
 Install-WindowsFeature NET-Framework-Features -IncludeAllSubFeature
 Install-WindowsFeature NET-Framework-45-ASPNET -IncludeAllSubFeature
@@ -19,15 +20,9 @@ netsh advfirewall firewall add rule name="Open Port 3389" dir=in action=allow pr
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
 
 Write-Host "Customising Windows Explorer to be dev-friendly"
-$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer'
+$key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer' # careful with that :\, it a secret Powershell spell when inside ""
 $advancedKey = "$key\Advanced"
 $cabinetStateKey = "$key\CabinetState"
 
-Set-ItemProperty $advancedKey HideFileExt 0
-Set-ItemProperty $cabinetStateKey FullPath  1
-
-Write-Host "Installing Windows updates...let the hour long fun begin"
-choco install pswindowsupdate
-Import-Module PSWindowsUpdate
-
-Get-WUInstall -IgnoreReboot -AcceptAll
+Set-ItemProperty -Path $advancedKey -Name HideFileExt -Value 0 -ErrorAction Ignore
+Set-ItemProperty -Path $cabinetStateKey -Name FullPath -Value 1 -ErrorAction Ignore

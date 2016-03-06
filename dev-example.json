@@ -1,0 +1,54 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "headless": false,
+      "boot_wait": "2m",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "8h",
+      "shutdown_command": "C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /quiet /shutdown",
+	     "shutdown_timeout": "90m",
+      "guest_os_type": "Windows2012_64",
+      "disk_size": 91440,
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/openssh.ps1",
+        "./scripts/oracle-cert.cer",
+		    "./scripts/devmachine/boxstarter.ps1",
+        "./scripts/devmachine/package.ps1"
+      ],
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "5048"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows_2012_r2_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_2012_r2.template"
+    }
+  ],
+  "variables": {
+    "iso_url": "./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "78bff6565f178ed08ab534397fe44845",
+    "autounattend": "./answer_files/2012_r2_devmachine/Autounattend.xml"
+  }
+}

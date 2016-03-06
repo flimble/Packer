@@ -1,4 +1,4 @@
-# Give it SSH
+# Give it SSH?
 #choco install win32-openssh -params '"/SSHServerFeature"'
 
 # This script is pending a tidy up
@@ -13,9 +13,6 @@ winrm set winrm/config/service/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 
 #################################################################################
-# windows powershell bootstrap script
-$host.ui.RawUI.WindowTitle = "Bootstrapping Windows"
-
 # supress network location Prompt
 New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Network\NewNetworkWindowOff" -Force
 
@@ -44,5 +41,3 @@ winrm set winrm/config/listener?Address=*+Transport=HTTP '@{Port="5985"}'
 powercfg -setactive 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c
 powercfg -change -monitor-timeout-ac 0
 powercfg -hibernate OFF
-
-start-sleep -s 120

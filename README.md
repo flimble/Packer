@@ -8,7 +8,17 @@ run build-web.ps1 in a new powershell prompt.
 
 ### The story of the Packer journey
 
+:gun: :gun: :gun: :gun: :gun:
+There have been quite a few hicups, learnings and annoyances on the way:
 
+- OVFtool.exe has some bad error messages
+- Vagrant's VSPhere plugin is broken (see below)
+- VMWare tools doesn't appear to install when done via Packer, it hangs (Windows 10).
+- VMWare tools on the VMWare site only has the latest version, killing scripts relying on older-versions.
+- You only need to use Boxstarter for older Windows Servers (< 2012)
+- Sysprep, the SID gift that keeps on giving.
+- OpenSSH isn't necessary, plus there is a Microsoft implementation now (but it doesn't work with Vagrant).
+- You shall not get an updated (official) Win2012 Server ISO, you have to spend an hour in Windows Update every time.
 
 
 ### Resources/references
@@ -124,7 +134,7 @@ The hacky answer is to use the vSphere Powershell CLI:
 
 The commands are straight forward:
 
-	# TODO
+	# Work in progress...
 
 You will also need your VM to join its domain, sysprep it, and then rename the computer, finally disabling openssh and winRM.
 The easiest option is to SSH into the box (as WinRM is a huge PITA), using the Microsoft OpenSSH service that is running.

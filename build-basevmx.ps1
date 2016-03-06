@@ -5,8 +5,9 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 choco install packer -y
 
 $start = get-date
-packer build -force windows_2012_r2_web.json
+packer build -force -only="vmware-basewindows" windows_2012_r2.json
 
 $end = get-date
 $total = $end - $start
 Write-Host "Took $total to complete"
+kill -name vmware-vmx -ErrorAction Ignore
