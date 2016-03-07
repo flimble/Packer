@@ -5,7 +5,8 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 choco install packer -y
 
 $start = get-date
-packer build -force -only="dev-desktop" windows_2012_r2.json
+$ovfName = Resolve-Path "output-virtualbox-basewindows\*.ovf"
+packer build -force -only="dev-desktop" -var "ovfsource=$ovfName" windows_2012_r2.json
 
 $end = get-date
 $total = $end - $start

@@ -11,5 +11,3 @@ $end = get-date
 $total = $end - $start
 Write-Host "Took $total to complete"
 kill -name vmware-vmx -ErrorAction Ignore
-
-.\build-webserver.ps1

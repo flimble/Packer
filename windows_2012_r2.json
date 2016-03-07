@@ -65,6 +65,7 @@
             "headless":false,
             "boot_wait":"2m",
             "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+            "guest_additions_mode" : "disable",
             "guest_os_type":"Windows2012_64",
             "disk_size":122880,
             "communicator":"winrm",
@@ -94,10 +95,11 @@
         {
             "name":"dev-desktop",
             "type":"virtualbox-ovf",
-            "source_path":"./output-virtualbox-basewindows/packer-virtualbox-basewindows-1457297547.ovf",
+            "source_path":"./output-virtualbox-basewindows/{{user `ovfsource`}}",
             "headless":false,
             "boot_wait":"2m",
             "shutdown_command":"C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /quiet /shutdown",
+            "guest_additions_mode" : "disable",
             "communicator":"winrm",
             "winrm_username":"vagrant",
             "winrm_password":"vagrant",
@@ -139,5 +141,8 @@
                 "./scripts/install-dev-software.ps1"
             ]
         }
-    ]
+    ],
+	"variables": {
+	    "ovfsource": "output-virtualbox-basewindows/output-virtualbox-basewindows.ovf"
+	}
 }
