@@ -1,5 +1,26 @@
 # Packer
-This repository is a set of [Packer](packer.io) files for creating Windows 2012 R2 templates on VMWare/vSphere.
+This repository is a set of [Packer](packer.io) files for creating Windows 2012 R2 templates on VMWare/vSphere and Hyper-V (via VirtualBox).
+
+### Pre-requisites
+
+- en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso from MSDN/Technet
+- VirtualBox or VMWare Professional or both.
+
+### Conventions/folder structure
+
+- `.json` file - contains 4 Packer definitions. There are 2 definitions per VM: 
+ 1. Creates the base Windows hard drive image and updates it.
+ 2. Takes the output from 1) and installs Windows features like IIS and software.
+- `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
+- `answerfiles` This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
+
+#### vSphere 
+
+The vSphere Packer builder section of the json file is for creating servers, usually web servers.
+
+#### VirtualBox
+
+The VirtualBox Packer builder definition of the json file is for creating a developer desktop, it is converted from VirtualBox to HyperV for performance benefits (that are negligible according to some, massive according to others).
 
 ### Getting started
 
