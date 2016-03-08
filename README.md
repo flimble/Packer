@@ -147,32 +147,17 @@ These are courtesy of [this blog](http://www.virtxpert.com/creating-vcenter-role
  - Mark as virtual machine  
  - Read customization speceifications  
 
-### Starting a new vSphere VM from the template
+### Starting a new VM using the template
 
-At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it from communicating via WinRM to the new VM.
-
-The hacky answer is to use the vSphere Powershell CLI:
+At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it from communicating via WinRM to the new VM. However for our needs Vagrant is probably over kill anyway. We use the Hyper-V Powershell API (built into Windows 10) and the vSphere Powershel CLI:
 
 - [Powershell CLI download](https://my.vmware.com/web/vmware/details?downloadGroup=VSP510-PCLI-510&productId=285)
 - [vSphere Powershell CLI docs](https://www.vmware.com/support/developer/PowerCLI/PowerCLI51/html/index.html)
 
-The commands are straight forward:
+#### vSphere 
 
 	# Work in progress...
 
-You will also need your VM to join its domain, sysprep it, and then rename the computer, finally disabling openssh and winRM.
-The easiest option is to SSH into the box (as WinRM is a huge PITA), using the Microsoft OpenSSH service that is running.
+#### Hyper-V
 
-The sysprep answer file is already on your D: drive, and also a set of functions that you can call via two Putty scripts (waiting
-for the restart before calling the 2nd script):
-
-	REM Microsoft OpenSSH currently only works with the command prompt
-	powershell -Command "&{ . C:\Code\Packer\scripts\shared\sysprep.ps1;Join-Domain 'domain', 'admin', 'password';Invoke-SysPrep }"
-
-	REM After the restart...
-	powershell -Command "&{ Rename-Computer -NewName 'My-Server' }"
-
-
-Of course some of this is doing the job of Vagrant: polling for the SSH server to re-appear is something Vagrant has inbuilt. This is only 
-because of the Vagrant vSphere Plugin issue. Once this is fixed (in 0.8.2 hopefully) then none of these steps will be necessary as 
-Vagrant will create the VM and run the provisioner for you.
+	# Work in progress...
