@@ -9,10 +9,11 @@ This repository is a set of [Packer](packer.io) files for creating Windows 2012 
 ### Conventions/folder structure
 
 - `.json` file - contains 4 Packer definitions. There are 2 definitions per VM: 
- 1. Creates the base Windows hard drive image and updates it.
+ 1. Creates the base Windows hard drive image and installs 167+ Windows updates on it.
  2. Takes the output from 1) and installs Windows features like IIS and software.
 - `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
-- `answerfiles` This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
+- `answerfiles` - This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
+- `build_xxx.ps` - Script to run packer.
 
 #### vSphere 
 
