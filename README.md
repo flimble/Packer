@@ -13,7 +13,7 @@ This repository is a set of [Packer](packer.io) files for creating Windows 2012 
  2. Takes the output from 1) and installs Windows features like IIS and software.
 - `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
 - `answerfiles` - This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
-- `build_xxx.ps` - Script to run packer.
+- `build_xxx.ps` - Script to run packer targetting the `.json` file and one of the named builders.
 
 #### vSphere 
 
@@ -30,7 +30,8 @@ run build-web.ps1 in a new powershell prompt.
 
 ### The story of the Packer journey
 
-:gun: :gun: :gun: :gun: :gun:
+:gun: :gun: :gun: :gun: :gun:  
+
 There have been quite a few hicups, learnings and annoyances on the way:
 
 - OVFtool.exe has some bad error messages
@@ -41,7 +42,8 @@ There have been quite a few hicups, learnings and annoyances on the way:
 - Sysprep, the SID gift that keeps on giving.
 - OpenSSH isn't necessary, plus there is a Microsoft implementation now (but it doesn't work with Vagrant).
 - You shall not get an updated (official) Win2012 Server ISO, you have to spend an hour in Windows Update every time.
-
+- WinRM needs a huge ceremony before you can connect to the VM (Packer does this for you).
+- You can't run Windows updates inside WinRM.
 
 ### Resources/references
 
