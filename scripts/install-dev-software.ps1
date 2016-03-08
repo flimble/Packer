@@ -8,8 +8,8 @@ choco install diffmerge
 choco install google-chrome-x64
 choco install firefox
 choco install nodejs.install
-choco install VisualStudio2015Community
+choco install visualstudio2015professional
 choco install resharper
-#choco install mssqlservermanagementstudio2014express
+choco install mssqlservermanagementstudio2014express
 
 # Installers for independent apps here...

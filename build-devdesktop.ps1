@@ -6,6 +6,7 @@ choco install packer -y
 
 $start = get-date
 $ovfName = Resolve-Path "output-virtualbox-basewindows\*.ovf"
+$ovfName = split-path $ovfName -leaf
 packer build -force -only="dev-desktop" -var "ovfsource=$ovfName" windows_2012_r2.json
 
 $end = get-date
