@@ -14,8 +14,8 @@
             "vnc_port_min":5900,
             "vnc_port_max":5980,
             "communicator":"winrm",
-            "winrm_username":"vagrant",
-            "winrm_password":"vagrant",
+            "winrm_username":"packer",
+            "winrm_password":"packer",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
@@ -40,8 +40,8 @@
             "vnc_port_min":5900,
             "vnc_port_max":5980,
             "communicator":"winrm",
-            "winrm_username":"vagrant",
-            "winrm_password":"vagrant",
+            "winrm_username":"packer",
+            "winrm_password":"packer",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
@@ -69,8 +69,8 @@
             "guest_os_type":"Windows2012_64",
             "disk_size":122880,
             "communicator":"winrm",
-            "winrm_username":"vagrant",
-            "winrm_password":"vagrant",
+            "winrm_username":"packer",
+            "winrm_password":"packer",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
@@ -93,7 +93,7 @@
             ]
         },
         {
-            "name":"dev-desktop",
+            "name":"virtualbox-devdesktop",
             "type":"virtualbox-ovf",
             "source_path":"./output-virtualbox-basewindows/{{user `ovfsource`}}",
             "headless":false,
@@ -101,8 +101,8 @@
             "shutdown_command":"C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /quiet /shutdown",
             "guest_additions_mode" : "disable",
             "communicator":"winrm",
-            "winrm_username":"vagrant",
-            "winrm_password":"vagrant",
+            "winrm_username":"packer",
+            "winrm_password":"packer",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "vboxmanage":[
@@ -134,7 +134,7 @@
         },
         {
             "type":"powershell",
-            "only": ["dev-desktop"],
+            "only": ["virtualbox-devdesktop"],
             "scripts":[
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1",

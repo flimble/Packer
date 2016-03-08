@@ -9,8 +9,8 @@ function Join-Domain($domain, $user, $password)
 
 function Invoke-SysPrep()
 {
-    # Disable the vagrant user
-    $ObjUser = [ADSI]"WinNT://localhost/vagrant"; 
+    # Disable the packer user
+    $ObjUser = [ADSI]"WinNT://localhost/packer"; 
     $ObjUser.userflags = 2; 
     $ObjUser.setinfo(); 
 

@@ -12,7 +12,7 @@ run build-web.ps1 in a new powershell prompt.
 There have been quite a few hicups, learnings and annoyances on the way:
 
 - OVFtool.exe has some bad error messages
-- Vagrant's VSPhere plugin is broken (see below)
+- Vagrant's vSPhere plugin is broken (see below)
 - VMWare tools doesn't appear to install when done via Packer, it hangs (Windows 10).
 - VMWare tools on the VMWare site only has the latest version, killing scripts relying on older-versions.
 - You only need to use Boxstarter for older Windows Servers (< 2012)
