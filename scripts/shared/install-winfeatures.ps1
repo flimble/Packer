@@ -25,4 +25,6 @@ $advancedKey = "$key\Advanced"
 $cabinetStateKey = "$key\CabinetState"
 
 Set-ItemProperty -Path $advancedKey -Name HideFileExt -Value 0 -ErrorAction Ignore
+Set-ItemProperty -Path $advancedKey -Name Hidden -Value 1 -ErrorAction Ignore
+Set-ItemProperty -Path $advancedKey -Name ShowSuperHidden -Value 1 -ErrorAction Ignore
 Set-ItemProperty -Path $cabinetStateKey -Name FullPath -Value 1 -ErrorAction Ignore

@@ -160,4 +160,6 @@ At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it
 
 #### Hyper-V
 
-	# Work in progress...
+	# Create and start a new VM
+	new-vm -name "dev-desktop" -VHDPath "output-virtualbox-devdesktop\hyper-v-output\Virtual Hard Disks\disk.vhd"
+	start-vm dev-desktop
