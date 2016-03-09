@@ -9,7 +9,6 @@ choco install google-chrome-x64
 choco install firefox
 choco install nodejs.install
 choco install visualstudio2015professional
-choco install resharper
+choco install resharper-platform -y
+Start-Process -FilePath "C:\ProgramData\chocolatey\lib\resharper-platform\JetBrains.ReSharperUltimate.10.0.2.exe" -ArgumentList "/SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait
 choco install mssqlservermanagementstudio2014express
-
-# Installers for independent apps here...
