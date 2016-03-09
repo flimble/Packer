@@ -7,13 +7,22 @@ function Join-Domain($domain, $user, $password)
     Add-Computer -DomainName $domain -Credential $cred
 }
 
-function Invoke-SysPrep()
+function Disable-PackerAccount()
 {
     # Disable the packer user
     $ObjUser = [ADSI]"WinNT://localhost/packer"; 
     $ObjUser.userflags = 2; 
     $ObjUser.setinfo(); 
+}
 
+function Invoke-SysPrep()
+{
     # Call sysprep
     C:\Windows\System32\sysprep\sysprep.exe /generalize /oobe /reboot /quiet /unattend:D:\Autounattend-sysprep.xml
+}
+
+function Update-LocalAdminPassword($password)
+{
+    $admin=[adsi]'WinNT://localhost/Administrator';
+    $admin.SetPassword($password)
 }
