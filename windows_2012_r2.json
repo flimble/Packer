@@ -14,8 +14,8 @@
             "vnc_port_min":5900,
             "vnc_port_max":5980,
             "communicator":"winrm",
-            "winrm_username":"packer",
-            "winrm_password":"packer",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
@@ -25,7 +25,7 @@
             "vmx_data":{
                 "RemoteDisplay.vnc.enabled":"false",
                 "RemoteDisplay.vnc.port":"5900",
-                "memsize":"4096",
+                "memsize":"8192",
                 "numvcpus":"2",
                 "scsi0.virtualDev":"lsisas1068"
             }
@@ -40,18 +40,18 @@
             "vnc_port_min":5900,
             "vnc_port_max":5980,
             "communicator":"winrm",
-            "winrm_username":"packer",
-            "winrm_password":"packer",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
-                "./scripts/shared/sysprep-tools.ps1",
+                "./scripts/vmware/sysprep-tools.ps1",
                 "./answer_files/Autounattend-sysprep.xml"
             ],
             "vmx_data":{
                 "RemoteDisplay.vnc.enabled":"false",
                 "RemoteDisplay.vnc.port":"5900",
-                "memsize":"4096",
+                "memsize":"8192",
                 "numvcpus":"2",
                 "scsi0.virtualDev":"lsisas1068"
             }
@@ -69,8 +69,8 @@
             "guest_os_type":"Windows2012_64",
             "disk_size":122880,
             "communicator":"winrm",
-            "winrm_username":"packer",
-            "winrm_password":"packer",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
@@ -101,8 +101,8 @@
             "shutdown_command":"C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /quiet /shutdown",
             "guest_additions_mode" : "disable",
             "communicator":"winrm",
-            "winrm_username":"packer",
-            "winrm_password":"packer",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "vboxmanage":[
@@ -119,6 +119,21 @@
                     "2"
                 ]
             ]
+        },
+        {
+            "name" : "aws-basewindows",
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_accesskey`}}",
+            "secret_key": "{{user `aws_secretkey`}}",
+            "user_data_file": "./scripts/aws/bootstrap-aws.txt",
+            "region": "eu-west-1",
+            "source_ami": "ami-8519a9f6",
+            "instance_type": "t2.medium",
+            "ami_name": "{{user `ami_name`}}",
+            "communicator":"winrm",
+            "winrm_username":"Administrator",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m"
         }
     ],
     "provisioners":[
@@ -126,10 +141,16 @@
             "type":"powershell",
             "only": ["vmware-webserver"],
             "scripts":[
-                "./scripts/shared/install-vmwaretools.ps1",
+                "./scripts/vmware/install-vmwaretools.ps1",
+                "./scripts/vmware/copy-sysprep-answerfile.ps1"
+            ]
+        },
+        {
+            "type":"powershell",
+            "only": ["vmware-webserver", "aws-basewindows"],
+            "scripts":[
                 "./scripts/shared/install-chocolatey.ps1",
-                "./scripts/shared/install-winfeatures.ps1",
-                "./scripts/shared/setup-sysprep-runonce.ps1"
+                "./scripts/shared/install-winfeatures.ps1"
             ]
         },
         {
@@ -138,11 +159,24 @@
             "scripts":[
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1",
-                "./scripts/install-dev-software.ps1"
+                "./scripts/virtualbox/install-dev-software.ps1"
+            ]
+        },
+        {
+            "type": "powershell",
+            "only": ["aws-basewindows"],
+            "inline": [
+                "# Enable the system password to be retrieved from the AWS Console after this AMI is built and used to launch code",
+                "$ec2config = [xml] (get-content 'C:\\Program Files\\Amazon\\Ec2ConfigService\\Settings\\config.xml')",
+                "($ec2config.ec2configurationsettings.plugins.plugin | where {$_.name -eq \"Ec2SetPassword\"}).state = \"Enabled\"",
+                "$ec2config.save(\"C:\\Program Files\\Amazon\\Ec2ConfigService\\Settings\\config.xml\")"
             ]
         }
     ],
 	"variables": {
-	    "ovfsource": "output-virtualbox-basewindows/output-virtualbox-basewindows.ovf"
+	    "ovfsource": "output-virtualbox-basewindows/output-virtualbox-basewindows.ovf",
+        "ami_name" : "",
+        "aws_accesskey" : "",
+        "aws_secretkey" : ""
 	}
 }
