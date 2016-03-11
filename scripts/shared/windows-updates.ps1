@@ -6,7 +6,7 @@ choco install pswindowsupdate
 Import-Module PSWindowsUpdate
 
 Write-Host "Installing Windows updates. This will take over an hour"
-Get-WUInstall -IgnoreReboot -AcceptAll
+#Get-WUInstall -IgnoreReboot -AcceptAll
 
 #################################################################################
 # Enable WinRM
