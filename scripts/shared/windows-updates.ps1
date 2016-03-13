@@ -6,7 +6,7 @@ choco install pswindowsupdate
 Import-Module PSWindowsUpdate
 
 Write-Host "Installing Windows updates. This will take over an hour"
-#Get-WUInstall -IgnoreReboot -AcceptAll
+Get-WUInstall -IgnoreReboot -AcceptAll
 
 #################################################################################
 # Enable WinRM
@@ -18,7 +18,7 @@ set-wsmanquickconfig -force
 #autostart
 sc.exe config WinRM start=auto
 
-# Allow unencrypted 
+# Allow unencrypted
 Enable-PSRemoting -Force -SkipNetworkProfileCheck
 winrm set winrm/config/client/auth '@{Basic="true"}'
 winrm set winrm/config/service '@{AllowUnencrypted="true"}'
