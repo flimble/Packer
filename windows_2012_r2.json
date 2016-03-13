@@ -20,6 +20,7 @@
             "winrm_timeout":"120m",
             "floppy_files":[
                 "./answer_files/Autounattend.xml",
+                "./scripts/shared/create-d-partition.ps1",
                 "./scripts/shared/windows-updates.ps1"
             ],
             "vmx_data":{
@@ -64,12 +65,25 @@
             "user_data_file": "./scripts/aws/bootstrap-aws.txt",
             "region": "eu-west-1",
             "source_ami": "ami-8519a9f6",
+            "force_deregister" : "true",
             "instance_type": "t2.medium",
             "ami_name": "{{user `ami_name`}}",
+            "ami_description" : "Windows 2012 r2 web role created by packer",
             "communicator":"winrm",
             "winrm_username":"Administrator",
             "winrm_port":"5985",
-            "winrm_timeout":"120m"
+            "winrm_timeout":"120m",
+            "launch_block_device_mappings" :
+            [
+            	{
+            		"device_name" : "/dev/sda1",
+            		"volume_size" : 80
+            	},
+            	{
+            		"device_name" : "/dev/sda2",
+            		"volume_size" : 40
+            	}
+            ]
         }
     ],
     "provisioners":[
