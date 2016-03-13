@@ -57,7 +57,7 @@
             }
         },
         {
-            "name":"virtualbox-basewindows",
+            "name":"virtualbox-stage1-base",
             "type":"virtualbox-iso",
             "iso_url":"./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
             "iso_checksum_type":"md5",
@@ -93,12 +93,12 @@
             ]
         },
         {
-            "name":"virtualbox-devdesktop",
+            "name":"virtualbox-stage2-devdesktop",
             "type":"virtualbox-ovf",
-            "source_path":"./output-virtualbox-basewindows/{{user `ovfsource`}}",
+            "source_path":"./output-virtualbox-stage1-base/{{user `ovfsource`}}",
             "headless":false,
             "boot_wait":"2m",
-            "shutdown_command":"C:/windows/system32/sysprep/sysprep.exe /generalize /oobe /quiet /shutdown",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "guest_additions_mode" : "disable",
             "communicator":"winrm",
             "winrm_username":"miranda",
@@ -155,7 +155,7 @@
         },
         {
             "type":"powershell",
-            "only": ["virtualbox-devdesktop"],
+            "only": ["virtualbox-stage2-devdesktop"],
             "scripts":[
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1",
@@ -174,7 +174,7 @@
         }
     ],
 	"variables": {
-	    "ovfsource": "output-virtualbox-basewindows/output-virtualbox-basewindows.ovf",
+	    "ovfsource": "output-virtualbox-stage1-base/output-virtualbox-stage1-base.ovf",
         "ami_name" : "",
         "aws_accesskey" : "",
         "aws_secretkey" : ""
