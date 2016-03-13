@@ -5,7 +5,7 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 choco install packer -y
 
 $start = get-date
-packer build -force -only="virtualbox-stage1-base" windows_2012_r2.json
+packer build -force -only="virtualbox-stage1-base" virtualbox.json
 
 $end = get-date
 $total = $end - $start

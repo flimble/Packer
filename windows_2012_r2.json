@@ -57,70 +57,6 @@
             }
         },
         {
-            "name":"virtualbox-stage1-base",
-            "type":"virtualbox-iso",
-            "iso_url":"./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
-            "iso_checksum_type":"md5",
-            "iso_checksum":"78bff6565f178ed08ab534397fe44845",
-            "headless":false,
-            "boot_wait":"2m",
-            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-            "guest_additions_mode" : "disable",
-            "guest_os_type":"Windows2012_64",
-            "disk_size":122880,
-            "communicator":"winrm",
-            "winrm_username":"miranda",
-            "winrm_password":"miranda",
-            "winrm_port":"5985",
-            "winrm_timeout":"120m",
-            "floppy_files":[
-                "./answer_files/Autounattend.xml",
-                "./scripts/shared/windows-updates.ps1"
-            ],
-            "vboxmanage":[
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--memory",
-                    "5048"
-                ],
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--cpus",
-                    "2"
-                ]
-            ]
-        },
-        {
-            "name":"virtualbox-stage2-devdesktop",
-            "type":"virtualbox-ovf",
-            "source_path":"./output-virtualbox-stage1-base/{{user `ovfsource`}}",
-            "headless":false,
-            "boot_wait":"2m",
-            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-            "guest_additions_mode" : "disable",
-            "communicator":"winrm",
-            "winrm_username":"miranda",
-            "winrm_password":"miranda",
-            "winrm_port":"5985",
-            "winrm_timeout":"120m",
-            "vboxmanage":[
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--memory",
-                    "5048"
-                ],
-                [
-                    "modifyvm",
-                    "{{.Name}}",
-                    "--cpus",
-                    "2"
-                ]
-            ]
-        },
-        {
             "name" : "aws-basewindows",
             "type": "amazon-ebs",
             "access_key": "{{user `aws_accesskey`}}",
@@ -151,15 +87,6 @@
             "scripts":[
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1"
-            ]
-        },
-        {
-            "type":"powershell",
-            "only": ["virtualbox-stage2-devdesktop"],
-            "scripts":[
-                "./scripts/shared/install-chocolatey.ps1",
-                "./scripts/shared/install-winfeatures.ps1",
-                "./scripts/virtualbox/install-dev-software.ps1"
             ]
         },
         {
