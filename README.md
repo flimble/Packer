@@ -24,7 +24,7 @@ The build up of the images is done in stages:
 3. Install our own applications (these scripts aren't part of this repository).
 4. *(Hyper-V and VirtualBox only)* convert the disk to Hyper-V format.
 
-Each stage feeds from the previous stage by launching VMWare/HyperV/AWS using the VM image or AMI from the previous stage. This means you can create a brand new image with new software on a lot faster by skipping the long-winded Windows install-and-update stage.
+Each stage feeds from the previous stage by launching VMWare/VirtualBox/AWS using the VM image or AMI from the previous stage. This means you can update an image quickly with new software by skipping the long-winded Windows install-and-update stage, and role installation.
 
 #### Disks
 
