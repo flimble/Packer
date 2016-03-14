@@ -4,6 +4,10 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 
 choco install packer -y
 
+# Extra logging
+$env:PACKER_LOG=1
+$env:PACKER_LOG_PATH="virtualbox-stage1.log"
+
 $start = get-date
 packer build -force -only="virtualbox-stage1-base" virtualbox.json
 
