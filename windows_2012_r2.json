@@ -46,7 +46,6 @@
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
-                "./scripts/vmware/sysprep-tools.ps1",
                 "./answer_files/Autounattend-sysprep.xml"
             ],
             "vmx_data":{
