@@ -179,6 +179,19 @@ At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it
 
 #### VMWare/vSphere 
 
+	function SleepAndNotify($message, $minutes)
+	{
+	    Write-host $message -ForegroundColor Green
+	
+	    for ($i = 1;$i -le $minutes;$i++)
+	    {
+	        Sleep -Seconds 60
+	
+	        $remaining = $minutes - $i
+	        Write-host "Waiting $remaining minutes..."
+	    }
+	}
+	
 	#=====================================================================================
 	# Create and start a VMs and get its IP
 	#=====================================================================================
