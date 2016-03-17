@@ -1,11 +1,13 @@
 # Convert from OVF to hyper-v hard disk format
-$hyperVDir = "output-virtualbox-devdesktop\hyper-v-output\Virtual Hard Disks"
+$hyperVDir = "output-virtualbox-stage4-hyper-v"
 if(!(Test-Path $hyperVDir))
 {
+    Write-Host "Creating hyper-v output directory: $hyperVDir"
     mkdir $hyperVDir
 }
 
-$vboxDisk = Resolve-Path "output-virtualbox-stage3-dev-full-build\*.vmdk"
+$vboxDisk = Resolve-Path "output-virtualbox-stage3\*.vmdk"
 $hyperVDisk = Join-Path $hyperVDir 'disk.vhd'
 
-. "$env:programfiles\oracle\VirtualBox\VBoxManage.exe" clonehd $vboxDisk $hyperVDisk --format vhd --variant fixed
+Write-Host "Exporting hyper-v disk to $hyperVDisk"
+. "$env:programfiles\oracle\VirtualBox\VBoxManage.exe" clonehd $vboxDisk $hyperVDisk --format vhd #--variant fixed
