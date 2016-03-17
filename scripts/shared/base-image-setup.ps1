@@ -1,4 +1,9 @@
-# This file is called by Windows in the answer file on first run.
+#################################################################################
+# Install Windows updates. 
+#
+# This needs to be called by Windows in the answer file on first run,
+# as you can't update Windows using WinRM.
+#################################################################################
 iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 choco feature enable --name allowGlobalConfirmation # stop the -y flag being needed for all "choco install"s
 

@@ -19,8 +19,7 @@
             "winrm_timeout":"120m",
             "floppy_files":[
                 "./answer_files/Autounattend.xml",
-                "./scripts/shared/create-d-partition.ps1",
-                "./scripts/shared/windows-updates.ps1"
+                "./scripts/shared/base-image-setup.ps1"
             ],
             "vboxmanage":[
                 [
@@ -71,6 +70,7 @@
             "type":"powershell",
             "only": ["virtualbox-stage2-devdesktop"],
             "scripts":[
+                "./scripts/shared/create-d-partition.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1",
                 "./scripts/virtualbox/install-dev-software.ps1"

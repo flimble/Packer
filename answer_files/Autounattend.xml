@@ -107,7 +107,7 @@
             </AutoLogon>
             <FirstLogonCommands>
                 <SynchronousCommand wcm:action="add">
-                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\windows-updates.ps1</CommandLine>
+                    <CommandLine>cmd.exe /c C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -File a:\base-image-setup.ps1</CommandLine>
                     <Description>Install Windows Updates</Description>
                     <Order>1</Order>
                     <RequiresUserInput>true</RequiresUserInput>

@@ -22,7 +22,7 @@ if (!$secretKey)
 $amiName = Read-Host "Enter the name for your new AMI"
 
 $start = get-date
-packer build -force -only="aws-basewindows" -var "ami_name=$amiName" -var "aws_accesskey=$accessKey" -var "aws_secretkey=$secretKey" windows_2012_r2.json
+packer build -force -only="aws-basewindows" -var "ami_name=$amiName" -var "aws_accesskey=$accessKey" -var "aws_secretkey=$secretKey" aws.json
 
 $end = get-date
 $total = $end - $start

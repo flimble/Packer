@@ -20,8 +20,7 @@
             "winrm_timeout":"120m",
             "floppy_files":[
                 "./answer_files/Autounattend.xml",
-                "./scripts/shared/create-d-partition.ps1",
-                "./scripts/shared/windows-updates.ps1"
+                "./scripts/shared/base-image-setup.ps1"
             ],
             "vmx_data":{
                 "RemoteDisplay.vnc.enabled":"false",
@@ -46,7 +45,6 @@
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
-                "./scripts/vmware/sysprep-tools.ps1",
                 "./answer_files/Autounattend-sysprep.xml"
             ],
             "vmx_data":{
@@ -56,34 +54,6 @@
                 "numvcpus":"2",
                 "scsi0.virtualDev":"lsisas1068"
             }
-        },
-        {
-            "name" : "aws-basewindows",
-            "type": "amazon-ebs",
-            "access_key": "{{user `aws_accesskey`}}",
-            "secret_key": "{{user `aws_secretkey`}}",
-            "user_data_file": "./scripts/aws/bootstrap-aws.txt",
-            "region": "eu-west-1",
-            "source_ami": "ami-8519a9f6",
-            "force_deregister" : "true",
-            "instance_type": "t2.medium",
-            "ami_name": "{{user `ami_name`}}",
-            "ami_description" : "Windows 2012 r2 web role created by packer",
-            "communicator":"winrm",
-            "winrm_username":"Administrator",
-            "winrm_port":"5985",
-            "winrm_timeout":"120m",
-            "launch_block_device_mappings" :
-            [
-            	{
-            		"device_name" : "/dev/sda1",
-            		"volume_size" : 80
-            	},
-            	{
-            		"device_name" : "/dev/sda2",
-            		"volume_size" : 40
-            	}
-            ]
         }
     ],
     "provisioners":[
@@ -91,33 +61,12 @@
             "type":"powershell",
             "only": ["vmware-webserver"],
             "scripts":[
+                "./scripts/shared/create-d-partition.ps1",
                 "./scripts/vmware/install-vmwaretools.ps1",
-                "./scripts/vmware/copy-sysprep-answerfile.ps1"
-            ]
-        },
-        {
-            "type":"powershell",
-            "only": ["vmware-webserver", "aws-basewindows"],
-            "scripts":[
+                "./scripts/vmware/copy-sysprep-answerfile.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1"
             ]
-        },
-        {
-            "type": "powershell",
-            "only": ["aws-basewindows"],
-            "inline": [
-                "# Enable the system password to be retrieved from the AWS Console after this AMI is built and used to launch code",
-                "$ec2config = [xml] (get-content 'C:\\Program Files\\Amazon\\Ec2ConfigService\\Settings\\config.xml')",
-                "($ec2config.ec2configurationsettings.plugins.plugin | where {$_.name -eq \"Ec2SetPassword\"}).state = \"Enabled\"",
-                "$ec2config.save(\"C:\\Program Files\\Amazon\\Ec2ConfigService\\Settings\\config.xml\")"
-            ]
         }
-    ],
-	"variables": {
-	    "ovfsource": "output-virtualbox-stage1-base/output-virtualbox-stage1-base.ovf",
-        "ami_name" : "",
-        "aws_accesskey" : "",
-        "aws_secretkey" : ""
-	}
+    ]
 }

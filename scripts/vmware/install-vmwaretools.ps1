@@ -1,5 +1,6 @@
-# VMWare tools are required
-# Unfortunately 'choco install vmware-tools' is out of date and fails
+#################################################################################
+# Install VMWare tools from the Github repo (don't use choco or the VMWare url).
+#################################################################################
 Write-Host "Downloading VMWare tools from Github"
 wget https://github.com/TotalJobsGroup/Packer/raw/master/VMware-tools-10.0.0-3000743-x86_64.exe -OutFile D:\VMware-tools-10.0.0-3000743-x86_64.exe
 
