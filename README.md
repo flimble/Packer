@@ -179,7 +179,68 @@ At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it
 
 #### VMWare/vSphere 
 
-	# Work in progress...
+	function SleepAndNotify($message, $minutes)
+	{
+	    Write-host $message -ForegroundColor Green
+	
+	    for ($i = 1;$i -le $minutes;$i++)
+	    {
+	        Sleep -Seconds 60
+	
+	        $remaining = $minutes - $i
+	        Write-host "Waiting $remaining minutes..."
+	    }
+	}
+	
+	#=====================================================================================
+	# Create and start a VMs and get its IP
+	#=====================================================================================
+	# To lookup names, use Get-Cluster, Get-Template, Get-folder etc - these return a list.
+	$templateName = "Win2012R2Standard"
+	
+	$cluster = Get-Cluster -Name "YOUR_CLUSTER_NAME"
+	$template = Get-Template -Name $templateName
+	$datastore = Get-Datastore -Name "YOUR_DATASTORE"
+	$resourcePool = Get-ResourcePool -Name "YOUR_RESOURCE_POOL_NAME"
+	$folder = get-folder -Name "YOUR_FOLDER_NAME"
+	
+	Write-host "Creating VM from the $templateName template..." -ForegroundColor Green
+	Connect-VIServer YOUR_VSPHERE_SERVER
+	$vm = New-VM -Name $vmName -Template $template -ResourcePool $resourcePool -Datastore $datastore -Location $folder
+	
+	Write-host "Starting the VM..." -ForegroundColor Green
+	Start-VM $vm
+	
+	SleepAndNotify "Waiting 3 minutes for an IP to appear..." 3
+	
+	$vm = Get-VM $vmName
+	$ip = $vm.Guest.IPAddress[0]
+	if (!$ip)
+	{
+		Write-host "No ip found for the VM, aborting." -ForegroundColor Yellow
+		exit;
+	}
+	
+	Write-Host "The IP of the VM is $ip"
+	
+	#=====================================================================================
+	# Open up WinRM without encryption
+	#=====================================================================================
+	winrm quickconfig
+	winrm set winrm/config/client/auth '@{Basic="true"}'
+	winrm set winrm/config/client '@{AllowUnencrypted="true"}'
+	Set-Item WSMan:\localhost\Client\TrustedHosts -Value "$ip" -Force
+	
+	#=====================================================================================
+	# Connect to the server using WinRM
+	#=====================================================================================
+	$adminPassword = "changeme"
+	$securePassword = convertto-securestring -AsPlainText -Force -String $adminPassword
+	$cred = new-object -typename System.Management.Automation.PSCredential -argumentlist "administrator", $securePassword
+	$session = new-pssession -computername $ip -credential $cred -Authentication Basic
+	
+	Write-host "Sys-preping the server (and rebooting)..." -ForegroundColor Green
+	invoke-command -Session $session -ScriptBlock { C:\Windows\System32\sysprep\sysprep.exe /generalize /oobe /reboot /quiet /unattend:D:\Autounattend-sysprep.xml }
 
 #### Hyper-V
 
