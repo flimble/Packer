@@ -6,15 +6,6 @@ This repository is a set of [Packer](packer.io) files for creating Windows 2012 
 - en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso from MSDN/Technet
 - VirtualBox or VMWare Professional or both.
 
-### Conventions/folder structure
-
-- `.json` file - contains 4 Packer definitions. There are 2 definitions per VM: 
- 1. Creates the base Windows hard drive image and installs 167+ Windows updates on it.
- 2. Takes the output from 1) and installs Windows features like IIS and software.
-- `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
-- `answerfiles` - This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
-- `vmtype_stageN_xxx.ps` - These scripts run packer targetting the `.json` file and one of the named builders.
-
 #### Stages
 
 The build up of the images is done in stages:
@@ -25,6 +16,15 @@ The build up of the images is done in stages:
 4. *(Hyper-V and VirtualBox only)* convert the disk to Hyper-V format.
 
 Each stage feeds from the previous stage by launching VMWare/VirtualBox/AWS using the VM image or AMI from the previous stage. This means you can update an image quickly with new software by skipping the long-winded Windows install-and-update stage, and role installation.
+
+### Conventions/folder structure
+
+- `.json` file - contains 4 Packer definitions. There are 2 definitions per VM: 
+ 1. Creates the base Windows hard drive image and installs 167+ Windows updates on it.
+ 2. Takes the output from 1) and installs Windows features like IIS and software.
+- `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
+- `answerfiles` - This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
+- `vmtype_stageN_xxx.ps` - These scripts run packer targetting the `.json` file and one of the named builders.
 
 #### Disks
 
@@ -55,6 +55,8 @@ The AWS builder definition in the JSON file creates an AMI based off the Amazon 
 
 There have been quite a few hicups, learnings and annoyances on the way:
 
+- Number of new Windows Updates since the initial commit: 160 -> 194
+- Hours spent waiting for Windows to update: 40?
 - OVFtool.exe has some bad error messages
 - Vagrant's vSphere plugin is broken (see below)
 - VMWare tools doesn't appear to install when done via Packer, it hangs (Windows 10).
