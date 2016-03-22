@@ -5,11 +5,9 @@ choco install visualstudio2015professional # if you get error 1603 then you are 
 
 # Git things
 choco install git
-choco install git.install -params '"/GitAndUnixToolsOnPath"'
 #choco install poshgit # this is leaving powershell broken...which stops the next stage
 
 # General Dev Tools
-choco install diffmerge
 choco install nodejs.install
 
 # Browsers
