@@ -2,6 +2,7 @@ Write-Host "Installing developer software"
 
 # Lets get this over with first
 choco install visualstudio2015professional # if you get error 1603 then you are missing some windows updates
+choco install microsoft-build-tools
 
 # Git things
 choco install git
