@@ -11,7 +11,7 @@
             "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown - Stage 1 complete\"",
             "guest_additions_mode" : "disable",
             "guest_os_type":"Windows2012_64",
-            "disk_size":122880,
+            "disk_size":82000,
             "communicator":"winrm",
             "winrm_username":"miranda",
             "winrm_password":"miranda",
