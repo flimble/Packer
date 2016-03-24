@@ -16,7 +16,7 @@
             "winrm_username":"miranda",
             "winrm_password":"miranda",
             "winrm_port":"5985",
-            "winrm_timeout":"120m",
+            "winrm_timeout":"520m",
             "floppy_files":[
                 "./answer_files/Autounattend.xml",
                 "./scripts/shared/base-image-setup.ps1"
