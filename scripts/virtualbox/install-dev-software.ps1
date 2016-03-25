@@ -32,4 +32,4 @@ Start-Sleep -s $secondsToSleep
 choco install resharper-platform -y
 $resharperInstaller = Resolve-Path "$env:ChocolateyInstall\lib\resharper-platform\JetBrains.ReSharperUltimate.*.exe"
 Write-Output "Installing ReSharper Ultimate with lots of goodies: $resharperInstaller"
-Start-Process -FilePath "$resharperInstaller" -ArgumentList "/SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait
+Start-Process -FilePath "$resharperInstaller" -ArgumentList "/SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait -PassThru
