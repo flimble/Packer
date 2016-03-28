@@ -10,6 +10,7 @@ foreach ($disk in $availableDisks)
 {
     $disk = $disk.DeviceID
     $vboxExtensions = Join-Path $disk "VBoxWindowsAdditions.exe"
+    
     Write-Output "Testing for $vboxExtensions"
     if(Test-Path $vboxExtensions)
     {
