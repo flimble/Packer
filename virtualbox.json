@@ -73,8 +73,7 @@
                 "./scripts/shared/create-d-partition.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/shared/install-winfeatures.ps1",
-                "./scripts/virtualbox/install-dev-software.ps1",
-                "./scripts/virtualbox/install-virtualbox-guest-additions.ps1"
+                "./scripts/virtualbox/install-dev-software.ps1"
             ]
         }
     ],
