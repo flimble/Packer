@@ -23,6 +23,11 @@ choco install webpicmd
 webpicmd /Install /Products:"ARRv3_0,UrlRewrite2" /AcceptEULA
 
 #################################################################################
+# Notepad2 for RDP-based editing.
+#################################################################################
+choco install notepad2
+
+#################################################################################
 # Enable remote desktop and some default Windows explorer features
 #################################################################################
 Write-Host "Enabling remote desktop"

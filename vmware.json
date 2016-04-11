@@ -10,7 +10,7 @@
             "boot_wait":"2m",
             "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
             "guest_os_type":"windows8srv-64",
-            "disk_size":122880,
+            "disk_size":81920,
             "vnc_port_min":5900,
             "vnc_port_max":5980,
             "communicator":"winrm",
@@ -58,13 +58,19 @@
     ],
     "provisioners":[
         {
+            "type": "file",
+            "only": ["vmware-webserver"],
+            "source": "VMware-tools-10.0.0-3000743-x86_64.exe",
+            "destination": "c:\\VMware-tools-10.0.0-3000743-x86_64.exe"
+        },
+        {
             "type":"powershell",
             "only": ["vmware-webserver"],
             "scripts":[
                 "./scripts/shared/create-d-partition.ps1",
-                "./scripts/vmware/install-vmwaretools.ps1",
                 "./scripts/vmware/copy-sysprep-answerfile.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
+                "./scripts/vmware/install-vmwaretools.ps1",
                 "./scripts/shared/install-winfeatures.ps1"
             ]
         }
