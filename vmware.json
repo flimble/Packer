@@ -26,7 +26,7 @@
                 "RemoteDisplay.vnc.enabled":"false",
                 "RemoteDisplay.vnc.port":"5900",
                 "memsize":"8192",
-                "numvcpus":"2",
+                "numvcpus":"4",
                 "scsi0.virtualDev":"lsisas1068"
             }
         },
@@ -51,7 +51,7 @@
                 "RemoteDisplay.vnc.enabled":"false",
                 "RemoteDisplay.vnc.port":"5900",
                 "memsize":"8192",
-                "numvcpus":"2",
+                "numvcpus":"4",
                 "scsi0.virtualDev":"lsisas1068"
             }
         }
