@@ -18,8 +18,15 @@ Install-WindowsFeature WAS -IncludeAllSubFeature
 Write-Host "Installing .NET 4.6"
 choco install dotnet4.6
 
-Write-Host "Installing ARRv3 and UrlRewrite2 via Web Platform Installer"
+Write-Host "Installing Web Platform Installer (webpicmd)"
 choco install webpicmd
+
+# Sometimes webPI feeds are broken, this is a workaround... http://forums.iis.net/t/1231644.aspx?Unable+to+install+WebPlattformInstaller+on+W2012R2
+$registryPath = "HKLM:\Software\Microsoft\webplatforminstaller"
+Write-Output "Changing feed target for WebPI..."
+New-ItemProperty -Path $registryPath -Name "ProductXMLLocation" -Value "http://www.microsoft.com/web/webpi/5.0/webproductlist.xml" -PropertyType STRING -Force | Out-Null
+
+Write-Host "Installing ARRv3 and UrlRewrite2 via Web Platform Installer (Take 2)"
 webpicmd /Install /Products:"ARRv3_0,UrlRewrite2" /AcceptEULA
 
 #################################################################################
