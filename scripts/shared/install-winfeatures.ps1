@@ -23,6 +23,12 @@ choco install webpicmd
 
 # Sometimes webPI feeds are broken, this is a workaround... http://forums.iis.net/t/1231644.aspx?Unable+to+install+WebPlattformInstaller+on+W2012R2
 $registryPath = "HKLM:\Software\Microsoft\webplatforminstaller"
+if(!(Test-Path $registryPath))
+{
+    Write-Output "Creating registry key $registryPath..."
+    New-Item -Path "HKLM:\Software\Microsoft" -Name "webplatforminstaller"
+}
+
 Write-Output "Changing feed target for WebPI..."
 New-ItemProperty -Path $registryPath -Name "ProductXMLLocation" -Value "http://www.microsoft.com/web/webpi/5.0/webproductlist.xml" -PropertyType STRING -Force | Out-Null
 
