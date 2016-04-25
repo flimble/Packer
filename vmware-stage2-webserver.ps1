@@ -1,13 +1,15 @@
-if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
-    iex ((new-object net.webclient).DownloadString("http://bit.ly/psChocInstall"))
+if (Test-Path ./output-vmware-webserver/vmware-webserver.vmx)
+{
+    $start = get-date
+    packer build -force -only="vmware-webserver" vmware.json
+
+    $end = get-date
+    $total = $end - $start
+    Write-Host "Took $total to complete"
+    kill -name vmware-vmx -ErrorAction Ignore
 }
-
-choco install packer -y
-
-$start = get-date
-packer build -force -only="vmware-webserver" vmware.json
-
-$end = get-date
-$total = $end - $start
-Write-Host "Took $total to complete"
-kill -name vmware-vmx -ErrorAction Ignore
+else 
+{
+    Write-Host "./output-vmware-basewindows/vmware-basewindows.vmx was not found" -ForegroundColor Red
+    Write-Host "Please run vmware-stage1-base.ps1 first." -ForegroundColor Red
+}
