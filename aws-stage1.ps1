@@ -11,12 +11,14 @@ if (!$accessKey)
 {
     $accessKey = Read-Host "AWS access key"
     $env:AWS_ACCESSKEY = $accessKey
+    Write-Host "AWS access key now stored in env:AWS_ACCESSKEY"
 }
 
 if (!$secretKey)
 {
     $secretKey = Read-Host "AWS secret key"
     $env:AWS_SECRETKEY = $secretKey
+    Write-Host "AWS secret key now stored in env:AWS_SECRETKEY"
 }
 
 $amiName = Read-Host "Enter the name for your new AMI"
