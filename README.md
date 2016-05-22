@@ -3,7 +3,7 @@ This repository is a set of [Packer](packer.io) files for creating Windows 2012 
 
 ### Pre-requisites
 
-- en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso from MSDN/Technet
+- [en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso](https://msdn.microsoft.com/subscriptions/json/GetDownloadRequest?brand=MSDN&locale=en-us&fileId=62158&activexDisabled=true&akamaiDL=false) from MSDN.com/Technet
 - VirtualBox or VMWare Professional or both.
 
 #### Stages
