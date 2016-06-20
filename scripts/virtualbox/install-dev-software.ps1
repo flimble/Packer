@@ -1,8 +1,13 @@
+$chocolateySource = "http://nuget.tjgdev.ds:7272/nuget/Chocolatey"
+Write-Output "Disabling default Chocolatey source..."
+choco source disable -name "chocolatey"
+Write-Output "Adding proget Chocolatey source... $chocolateySource"
+choco source add -n "tjgdev-proget" -s $chocolateySource -priority 999
+
 Write-Output "Installing developer software"
 
 # Git things
 choco install git
-#choco install poshgit # this is leaving powershell broken...which stops the next stage
 
 # General Dev Tools
 choco install nodejs.install
@@ -24,7 +29,7 @@ choco install visualstudio2015professional # if you get error 1603 then you are 
 
 # VSPro package is continuing to install after it has "completed" so we are doing a sleep to ensure everything is caught
 # https://chocolatey.org/packages/VisualStudio2015Professional#comment-2586516122
-$minutesToSleep = 25
+$minutesToSleep = 10
 $secondsToSleep = 60 * $minutesToSleep
 Write-Output "Sleeping for $minutesToSleep minutes due to dodgy VS Installer..."
 Start-Sleep -s $secondsToSleep
@@ -33,3 +38,7 @@ choco install resharper-platform -y
 $resharperInstaller = Resolve-Path "$env:ChocolateyInstall\lib\resharper-platform\JetBrains.ReSharperUltimate.*.exe"
 Write-Output "Installing ReSharper Ultimate with lots of goodies: $resharperInstaller"
 Start-Process -FilePath "$resharperInstaller" -ArgumentList "/SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait -PassThru
+
+Write-Output "Ensuring password doesn't expire..."
+&net accounts /maxpwage:unlimited
+Write-Output "Done."
