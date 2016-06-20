@@ -1,0 +1,103 @@
+{
+    "builders":[
+        {
+            "name":"vmware-basewindows",
+            "vm_name":"vmware-basewindows",
+            "type":"vmware-iso",
+            "iso_url":"./iso/en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso",
+            "iso_checksum_type":"md5",
+            "iso_checksum":"78bff6565f178ed08ab534397fe44845",
+            "headless":false,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 1\"",
+            "guest_os_type":"windows8srv-64",
+            "disk_size":81920,
+            "vnc_port_min":5900,
+            "vnc_port_max":5980,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m",
+            "floppy_files":[
+                "./answer_files/Autounattend.xml",
+                "./scripts/shared/base-image-setup.ps1"
+            ],
+            "vmx_data":{
+                "RemoteDisplay.vnc.enabled":"false",
+                "RemoteDisplay.vnc.port":"5900",
+                "memsize":"8192",
+                "numvcpus":"4",
+                "scsi0.virtualDev":"lsisas1068"
+            }
+        },
+        {
+            "name":"vmware-webserver",
+            "vm_name":"vmware-webserver",
+            "type":"vmware-vmx",
+            "source_path":"./output-vmware-basewindows/vmware-basewindows.vmx",
+            "headless":false,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 2\"",
+            "vnc_port_min":5900,
+            "vnc_port_max":5980,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m",
+            "floppy_files":[
+                "./answer_files/Autounattend-sysprep.xml"
+            ],
+            "vmx_data":{
+                "RemoteDisplay.vnc.enabled":"false",
+                "RemoteDisplay.vnc.port":"5900",
+                "memsize":"8192",
+                "numvcpus":"4",
+                "scsi0.virtualDev":"lsisas1068"
+            }
+        },
+        {
+            "name":"vmware-buildmachine",
+            "vm_name":"vmware-buildmachine",
+            "type":"vmware-vmx",
+            "source_path":"./output-vmware-webserver/vmware-webserver.vmx",
+            "headless":false,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 3\"",
+            "vnc_port_min":5900,
+            "vnc_port_max":5980,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m"
+        }
+    ],
+    "provisioners":[
+        {
+            "type": "file",
+            "only": ["vmware-webserver"],
+            "source": "VMware-tools-10.0.0-3000743-x86_64.exe",
+            "destination": "c:\\VMware-tools-10.0.0-3000743-x86_64.exe"
+        },
+        {
+            "type":"powershell",
+            "only": ["vmware-webserver"],
+            "scripts":[
+                "./scripts/shared/create-d-partition.ps1",
+                "./scripts/vmware/copy-sysprep-answerfile.ps1",
+                "./scripts/shared/install-chocolatey.ps1",
+                "./scripts/vmware/install-vmwaretools.ps1",
+                "./scripts/shared/install-winfeatures.ps1"
+            ]
+        },
+        {
+            "type":"powershell",
+            "only": ["vmware-buildmachine"],
+            "scripts":[
+                "./scripts/vmware/buildmachine.ps1"
+            ]
+        }
+    ]
+}

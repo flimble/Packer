@@ -11,18 +11,20 @@ if (!$accessKey)
 {
     $accessKey = Read-Host "AWS access key"
     $env:AWS_ACCESSKEY = $accessKey
+    Write-Host "AWS access key now stored in env:AWS_ACCESSKEY"
 }
 
 if (!$secretKey)
 {
     $secretKey = Read-Host "AWS secret key"
     $env:AWS_SECRETKEY = $secretKey
+    Write-Host "AWS secret key now stored in env:AWS_SECRETKEY"
 }
 
 $amiName = Read-Host "Enter the name for your new AMI"
 
 $start = get-date
-packer build -force -only="aws-basewindows" -var "ami_name=$amiName" -var "aws_accesskey=$accessKey" -var "aws_secretkey=$secretKey" windows_2012_r2.json
+packer build -force -only="aws-basewindows" -var "ami_name=$amiName" -var "aws_accesskey=$accessKey" -var "aws_secretkey=$secretKey" aws.json
 
 $end = get-date
 $total = $end - $start
