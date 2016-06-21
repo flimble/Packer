@@ -3,6 +3,10 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 }
 
 choco install packer -y
+choco upgrade packer -y
+
+choco install VirtualBox -y
+choco upgrade VirtualBox -y
 
 # Extra logging
 $env:PACKER_LOG=1
