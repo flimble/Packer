@@ -2,3 +2,4 @@ packer_cache/
 iso/*
 output-*/*
 *.log
+packer-ubuntu-16.04-amd64-vmware/
