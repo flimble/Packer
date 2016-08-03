@@ -20,8 +20,8 @@
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
-                "./answer_files/Autounattend.xml",
-                "./scripts/shared/fixnetwork.ps1",
+                "./answer_files/win10/Autounattend.xml",
+                "./scripts/shared/win10/fixnetwork.ps1",
                 "./scripts/shared/base-image-setup.ps1"
             ],
             "vmx_data":{
@@ -48,7 +48,7 @@
             "winrm_port":"5985",
             "winrm_timeout":"120m",
             "floppy_files":[
-                "./answer_files/Autounattend-sysprep.xml"
+                "./answer_files/win10/Autounattend-sysprep.xml"
             ],
             "vmx_data":{
                 "RemoteDisplay.vnc.enabled":"false",
@@ -68,7 +68,7 @@
                 "./scripts/vmware/copy-sysprep-answerfile.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/vmware/install-vmwaretools.ps1",
-                "./scripts/shared/install-winfeatures.ps1"
+                "./scripts/shared/win10/install-winfeatures.ps1"
             ]
         }
     ]
