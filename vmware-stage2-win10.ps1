@@ -1,7 +1,7 @@
 if (Test-Path ./output-vmware-basewindows/vmware-basewindows.vmx)
 {
     $start = get-date
-    packer build -force -only="vmware-win10" vmware.json
+    packer build -force -only="vmware-win10" vmware-win10.json
 
     $end = get-date
     $total = $end - $start

@@ -68,7 +68,7 @@
                 "./scripts/vmware/copy-sysprep-answerfile.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
                 "./scripts/vmware/install-vmwaretools.ps1",
-                "./scripts/shared/install-winfeatures.ps1"
+                "./scripts/shared/install-winfeatures-win10.ps1"
             ]
         }
     ]
