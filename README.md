@@ -1,5 +1,5 @@
 # Packer
-This repository is a set of [Packer](packer.io) files for creating Windows 2012 R2 templates on VMWare/vSphere and Hyper-V (via VirtualBox).
+This repository is a set of [Packer](packer.io) files for creating Windows 2012 R2 and Windows 10 templates on VMWare/vSphere and Hyper-V (via VirtualBox).
 
 ### Pre-requisites
 
@@ -10,25 +10,27 @@ This repository is a set of [Packer](packer.io) files for creating Windows 2012 
 
 The build up of the images is done in stages:
 
-1. Install Windows from the ISO, run Windows update, enable WinRM.
-2. Enable the Windows feature roles like IIS, install software
-3. Install our own applications (these scripts aren't part of this repository).
-4. *(Hyper-V and VirtualBox only)* convert the disk to Hyper-V format.
+1. Install Windows from the ISO, run Windows update, enable WinRM. *This is only necessary with VMWare/Virtualbox because Microsoft don't distribute ISOs with all the Windows updates installed.*
+2. Enable the Windows feature roles like IIS, install web-related software.
+3. Install custom software on the image:
+	- Teamcity build agent software
+	- OR...Our own applications (these scripts aren't part of this repository)
 
 Each stage feeds from the previous stage by launching VMWare/VirtualBox/AWS using the VM image or AMI from the previous stage. This means you can update an image quickly with new software by skipping the long-winded Windows install-and-update stage, and role installation.
 
 ### Conventions/folder structure
 
-- `.json` file - contains 4 Packer definitions. There are 2 definitions per VM: 
+- `.json` file - contains the Packer definitions. There are up to 3 definitions per VM: 
  1. Creates the base Windows hard drive image and installs 167+ Windows updates on it.
  2. Takes the output from 1) and installs Windows features like IIS and software.
-- `scripts` folder - contains Powershell scripts for the two stages. Windows updates are done via the answer file, as WinRM can't run Windows updates. The rest is done via WinRM in Packer.
+ 3. Takes the output from 2) and installs software.
+- `scripts` folder - contains Powershell scripts for the two stages. These are run via WinRM in Packer.
 - `answerfiles` - This contains the Windows answer file that Windows needs for automated setups. It contains a default user "packer/packer" and volume licence keys from Microsoft KMS.
-- `vmtype_stageN_xxx.ps` - These scripts run packer targetting the `.json` file and one of the named builders.
+- `{vmtype}_{stage}.ps` - These scripts run packer targetting the `.json` file and one of the named builders.
 
 #### Disks
 
-Each definition has 120gb hard drive. This has two partitions - 80gb for Windows on C:, and 40gb for the D: drive which is best practice for website folders. 
+Each definition has 80gb hard drive. This has two partitions - 50gb for Windows on C:, and 30gb for the D: drive which is best practice for website folders. 
 
 The AWS definition does this using two drives/volumes instead of one.
 
@@ -46,7 +48,7 @@ The AWS builder definition in the JSON file creates an AMI based off the Amazon 
 
 ### Getting started
 
-- Make sure the MSDN Windows 2012 R2 ISO is in the /iso/ folder ("en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso"). 
+- Make sure the MSDN Windows 2012 R2 ISO is in the /iso/ folder ("en_windows_server_2012_r2_with_update_x64_dvd_6052708.iso"). Windows 10 will download the ISO image automatically.
 - You will need VirtualBox or VMWare professional installed to run the scripts.
 
 ### The story of the Packer journey
@@ -252,4 +254,4 @@ At this time (Feb 2016) there is a bug in the Vagrant vSphere plugin stopping it
 	
 #### AWS
 
-	# Work in progress...
+See https://gist.github.com/yetanotherchris/f8ae45802a83f749c378ec2f40a12009 - this creates a new VM and tags it.
