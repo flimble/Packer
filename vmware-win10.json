@@ -1,12 +1,12 @@
 {
     "builders":[
         {
-            "name":"vmware-basewindows",
-            "vm_name":"vmware-basewindows",
+            "name":"vmware-win10-stage1",
+            "vm_name":"vmware-win10-stage1",
             "type":"vmware-iso",
-            "iso_url": "http://care.dlservice.microsoft.com/dl/download/C/3/9/C399EEA8-135D-4207-92C9-6AAB3259F6EF/10240.16384.150709-1700.TH1_CLIENTENTERPRISEEVAL_OEMRET_X64FRE_EN-US.ISO",
+            "iso_url": "./iso/windows10-msdn.iso",
             "iso_checksum_type": "sha1",
-            "iso_checksum": "56ab095075be28a90bc0b510835280975c6bb2ce",
+            "iso_checksum": "99fd8082a609997ae97a514dca22becf20420891",
             "headless":false,
             "boot_wait":"2m",
             "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 1\"",
@@ -33,10 +33,10 @@
             }
         },
         {
-            "name":"vmware-win10",
-            "vm_name":"vmware-win10",
+            "name":"vmware-win10-stage2",
+            "vm_name":"vmware-win10-stage2",
             "type":"vmware-vmx",
-            "source_path":"./output-vmware-basewindows/vmware-basewindows.vmx",
+            "source_path":"./win10-stage1/Windows 10 x64.vmx",
             "headless":false,
             "boot_wait":"2m",
             "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 2\"",
@@ -62,7 +62,7 @@
     "provisioners":[
         {
             "type":"powershell",
-            "only": ["vmware-win10"],
+            "only": ["vmware-win10-stage2"],
             "scripts":[
                 "./scripts/shared/create-d-partition.ps1",
                 "./scripts/vmware/copy-sysprep-answerfile.ps1",

@@ -1,7 +1,7 @@
-if (Test-Path ./output-vmware-basewindows/vmware-basewindows.vmx)
+if (Test-Path "./win10-stage1/Windows 10 x64.vmx")
 {
     $start = get-date
-    packer build -force -only="vmware-win10" vmware-win10.json
+    packer build -force -only="vmware-win10-stage2" vmware-win10.json
 
     $end = get-date
     $total = $end - $start
@@ -10,6 +10,6 @@ if (Test-Path ./output-vmware-basewindows/vmware-basewindows.vmx)
 }
 else 
 {
-    Write-Host "./output-vmware-basewindows/vmware-basewindows.vmx was not found" -ForegroundColor Red
+    Write-Host "./output-vmware-win10-stage1/vmware-win10-stage1.vmx was not found" -ForegroundColor Red
     Write-Host "Please run vmware-stage1-base.ps1 first." -ForegroundColor Red
 }
