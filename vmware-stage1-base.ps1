@@ -5,7 +5,7 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 choco install packer -y
 
 $start = get-date
-packer build -force -only="vmware-basewindows" vmware-win10.json
+packer build -force -only="vmware-basewindows" vmware.json
 
 $end = get-date
 $total = $end - $start
