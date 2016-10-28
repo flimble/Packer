@@ -61,11 +61,11 @@
     }
   ],
   "variables": {
-    "ami_name": "",
-    "associate_public_ip_address": "",
     "aws_accesskey": "",
     "aws_secretkey": "",
+    "ami_name": "",
     "security_group_id": "",
-    "subnet_id": ""
+    "subnet_id": "",
+    "associate_public_ip_address": ""
   }
 }

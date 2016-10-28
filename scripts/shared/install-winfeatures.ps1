@@ -19,7 +19,7 @@ Write-Host "Installing .NET 4.6"
 choco install dotnet4.6
 
 Write-Host "Installing Web Platform Installer (webpicmd)"
-choco install webpicmd
+choco install webpicmd --allowEmptyChecksums
 
 # Sometimes webPI feeds are broken, this is a workaround... http://forums.iis.net/t/1231644.aspx?Unable+to+install+WebPlattformInstaller+on+W2012R2
 $registryPath = "HKLM:\Software\Microsoft\webplatforminstaller"

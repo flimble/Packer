@@ -1,4 +1,4 @@
-if (Test-Path ./output-vmware-webserver/vmware-webserver.vmx)
+if (Test-Path ./output-vmware-basewindows/vmware-basewindows.vmx)
 {
     $start = get-date
     packer build -force -only="vmware-webserver" vmware.json

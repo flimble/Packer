@@ -1,0 +1,75 @@
+{
+    "builders":[
+        {
+            "name":"vmware-win10-stage1",
+            "vm_name":"vmware-win10-stage1",
+            "type":"vmware-iso",
+            "iso_url": "./iso/windows10-msdn.iso",
+            "iso_checksum_type": "sha1",
+            "iso_checksum": "99fd8082a609997ae97a514dca22becf20420891",
+            "headless":false,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 1\"",
+            "guest_os_type":"windows8srv-64",
+            "disk_size":81920,
+            "vnc_port_min":5900,
+            "vnc_port_max":5980,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m",
+            "floppy_files":[
+                "./answer_files/win10/Autounattend.xml",
+                "./scripts/shared/win10/fixnetwork.ps1",
+                "./scripts/shared/base-image-setup.ps1"
+            ],
+            "vmx_data":{
+                "RemoteDisplay.vnc.enabled":"false",
+                "RemoteDisplay.vnc.port":"5900",
+                "memsize":"8192",
+                "numvcpus":"4",
+                "scsi0.virtualDev":"lsisas1068"
+            }
+        },
+        {
+            "name":"vmware-win10-stage2",
+            "vm_name":"vmware-win10-stage2",
+            "type":"vmware-vmx",
+            "source_path":"./win10-stage1/Windows 10 x64.vmx",
+            "headless":false,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown Stage 2\"",
+            "vnc_port_min":5900,
+            "vnc_port_max":5980,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m",
+            "floppy_files":[
+                "./answer_files/win10/Autounattend-sysprep.xml"
+            ],
+            "vmx_data":{
+                "RemoteDisplay.vnc.enabled":"false",
+                "RemoteDisplay.vnc.port":"5900",
+                "memsize":"8192",
+                "numvcpus":"4",
+                "scsi0.virtualDev":"lsisas1068"
+            }
+        }
+    ],
+    "provisioners":[
+        {
+            "type":"powershell",
+            "only": ["vmware-win10-stage2"],
+            "scripts":[
+                "./scripts/shared/create-d-partition.ps1",
+                "./scripts/vmware/copy-sysprep-answerfile.ps1",
+                "./scripts/shared/install-chocolatey.ps1",
+                "./scripts/vmware/install-vmwaretools.ps1",
+                "./scripts/shared/win10/install-winfeatures.ps1"
+            ]
+        }
+    ]
+}
