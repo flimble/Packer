@@ -1,8 +1,10 @@
 <powershell>
-# set administrator password
+# To see the logs check C:\ProgramData\Amazon\EC2-Windows\Launch\Log (2016 Server)
+
+# Set the administrator password *required by Packer)
 net user Administrator W7@89z68mvOp
 
-# configure WinRM
+# Configure WinRM
 winrm quickconfig -q  
 winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="0"}'  
 winrm set winrm/config '@{MaxTimeoutms="7200000"}'  
@@ -19,6 +21,17 @@ net start winrm
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
 
 # Create the D: volume, let it fill the the rest of the disk
+Resize-Partition -DiskNumber 0 -PartitionNumber 1 -Size 40GB
 new-partition -DriveLetter D -DiskNumber 0 -UseMaximumSize
 Format-Volume D -Confirm:$false -NewFileSystemLabel "Websites"
-</powershell> 
+
+# Set the locale to UK
+Set-TimeZone -Name "GMT Standard Time"
+Set-Culture en-GB
+Set-WinSystemLocale en-GB
+Set-WinHomeLocation -GeoId 242
+Set-WinUserLanguageList en-GB -force
+
+# Install chocolatey
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+</powershell>
