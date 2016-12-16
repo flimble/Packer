@@ -3,23 +3,35 @@
 #################################################################################
 
 # To verify the installation this could use Get-WindowsFeature
-Write-Host "Installing Web server role features (IIS, MSMQ, .NET 4.5)"
+Write-Host "Installing Role 'NET-Framework-Core'"
 Install-WindowsFeature NET-Framework-Core
+
+Write-Host "Installing Role 'Web-Server'"
 Install-WindowsFeature Web-Server -IncludeAllSubFeature
+
+Write-Host "Installing Role 'NET-Framework-Features'"
 Install-WindowsFeature NET-Framework-Features -IncludeAllSubFeature
+
+Write-Host "Installing Role 'NET-Framework-45-ASPNET'"
 Install-WindowsFeature NET-Framework-45-ASPNET -IncludeAllSubFeature
+
+Write-Host "Installing Role 'Application-Server'"
 Install-WindowsFeature Application-Server -IncludeAllSubFeature
+
+Write-Host "Installing Role 'MSMQ'"
 Install-WindowsFeature MSMQ -IncludeAllSubFeature
+
+Write-Host "Installing Role 'WAS'"
 Install-WindowsFeature WAS -IncludeAllSubFeature
 
 #################################################################################
-# Install .NET 4.6 and ARR
+# Install .NET 4.6.2 and ARR
 #################################################################################
-Write-Host "Installing .NET 4.6"
-choco install dotnet4.6
+Write-Host "Installing .NET 4.6.2"
+choco install dotnet4.6.2
 
 Write-Host "Installing Web Platform Installer (webpicmd)"
-choco install webpicmd --allowEmptyChecksums
+choco install webpicmd
 
 # Sometimes webPI feeds are broken, this is a workaround... http://forums.iis.net/t/1231644.aspx?Unable+to+install+WebPlattformInstaller+on+W2012R2
 $registryPath = "HKLM:\Software\Microsoft\webplatforminstaller"
