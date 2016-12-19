@@ -1,8 +1,12 @@
 <powershell>
-# set administrator password
-net user Administrator W7@89z68mvOp
+# To see the logs check C:\ProgramData\Amazon\EC2-Windows\Launch\Log (2016 Server)
 
-# configure WinRM
+# If you want, set an administrator password
+# (also set "winrm_password": "W7@89z68mvOp" in aws.json)
+#net user Administrator W7@89z68mvOp
+
+# Configure WinRM
+enable-psremoting -force
 winrm quickconfig -q  
 winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="0"}'  
 winrm set winrm/config '@{MaxTimeoutms="7200000"}'  
@@ -10,6 +14,7 @@ winrm set winrm/config/service '@{AllowUnencrypted="true"}'
 winrm set winrm/config/service/auth '@{Basic="true"}'
 
 netsh advfirewall firewall add rule name="WinRM 5985" protocol=TCP dir=in localport=5985 action=allow
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
 
 net stop winrm  
 sc.exe config winrm start=auto  
@@ -19,6 +24,17 @@ net start winrm
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
 
 # Create the D: volume, let it fill the the rest of the disk
+Resize-Partition -DiskNumber 0 -PartitionNumber 1 -Size 40GB
 new-partition -DriveLetter D -DiskNumber 0 -UseMaximumSize
 Format-Volume D -Confirm:$false -NewFileSystemLabel "Websites"
-</powershell> 
+
+# Set the locale to UK
+Set-TimeZone -Name "GMT Standard Time"
+Set-Culture en-GB
+Set-WinSystemLocale en-GB
+Set-WinHomeLocation -GeoId 242
+Set-WinUserLanguageList en-GB -force
+
+# Install chocolatey
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+</powershell>
