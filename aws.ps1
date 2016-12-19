@@ -13,7 +13,7 @@ if ($hasPacker -eq $null)
 # Take a survey
 $aws_accesskey = $env:AWS_ACCESSKEY
 $aws_secretkey = $env:AWS_SECRETKEY
-$aws_ami_windows_id = "ami-771b4504"
+$aws_ami_windows_id = "ami-95d984e6"
 
 $aws_ami_name = $env:aws_ami_name
 $aws_security_group_id = $env:aws_security_group_id
@@ -49,7 +49,7 @@ if (!$aws_ami_name)
     $env:aws_ami_name = $aws_ami_name
 }
 
-$aws_ami_description = Read-Host "Enter a description for your new AMI (Windows Server 2016 base)"
+$aws_ami_description = Read-Host "Enter a description for your new AMI (Windows Server 2012 base)"
 if (!$aws_ami_description)
 {
     $aws_ami_description = "Windows Server 2016 base"

@@ -1,7 +1,6 @@
 #################################################################################
 # Install IIS, MSMQ, WCF, .NET 4.5
 #################################################################################
-
 # To verify the installation this could use Get-WindowsFeature
 Write-Host "Installing Role 'NET-Framework-Core'"
 Install-WindowsFeature NET-Framework-Core

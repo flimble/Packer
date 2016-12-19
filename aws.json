@@ -73,7 +73,8 @@
       ],
       "scripts": [
         "./scripts/shared/install-chocolatey.ps1",
-        "./scripts/shared/install-winfeatures.ps1"
+        "./scripts/shared/install-winfeatures.ps1",
+        "./scripts/aws/ec2-config.ps1"
       ]
     },
     {
@@ -84,7 +85,8 @@
       "scripts": [
         "./scripts/shared/install-chocolatey.ps1",
         "./scripts/shared/install-winfeatures.ps1",
-        "./scripts/shared/teamcity-agent.ps1"
+        "./scripts/shared/teamcity-agent.ps1",
+        "./scripts/aws/ec2-config.ps1"
       ]
     }
   ],
