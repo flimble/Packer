@@ -1,5 +1,8 @@
 <powershell>
-# To see the logs check C:\ProgramData\Amazon\EC2-Windows\Launch\Log (2016 Server)
+# To see the userdata logs check:
+#   C:\ProgramData\Amazon\EC2-Windows\Launch\Log (2016 Server)
+#   C:\Program Files\Amazon\EC2-Windows\Launch\Log (2012 Server)
+Set-ExecutionPolicy Bypass -Force
 
 # If you want, set an administrator password
 # (also set "winrm_password": "W7@89z68mvOp" in aws.json)
@@ -20,9 +23,6 @@ net stop winrm
 sc.exe config winrm start=auto  
 net start winrm
 
-# turn off PowerShell execution policy restrictions
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
-
 # Create the D: volume, let it fill the the rest of the disk
 Resize-Partition -DiskNumber 0 -PartitionNumber 1 -Size 40GB
 new-partition -DriveLetter D -DiskNumber 0 -UseMaximumSize
@@ -34,7 +34,4 @@ Set-Culture en-GB
 Set-WinSystemLocale en-GB
 Set-WinHomeLocation -GeoId 242
 Set-WinUserLanguageList en-GB -force
-
-# Install chocolatey
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 </powershell>
