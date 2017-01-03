@@ -12,7 +12,7 @@
             "shutdown_timeout": "1h",
             "guest_additions_mode" : "disable",
             "guest_os_type":"Windows2012_64",
-            "disk_size":62440,
+            "disk_size":73728,
             "communicator":"winrm",
             "winrm_username":"miranda",
             "winrm_password":"miranda",
