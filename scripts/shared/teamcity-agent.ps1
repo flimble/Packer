@@ -4,7 +4,7 @@
 choco install googlechrome
 choco install chromedriver
 
-# Gulp
+# Node (primarily for gulp)
 choco install nodejs.install
 
 # Java
@@ -17,6 +17,9 @@ choco install microsoft-build-tools
 
 # Give Visual Studio 90 minutes (!!) to install
 choco install visualstudio2015professional --execution-timeout=5400
+
+# Git
+choco install git
 
 # .net core
 choco install dotnetcore-sdk -pre
