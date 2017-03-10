@@ -14,6 +14,9 @@ Install-WindowsFeature NET-Framework-Features -IncludeAllSubFeature
 Write-Host "Installing Role 'NET-Framework-45-ASPNET'"
 Install-WindowsFeature NET-Framework-45-ASPNET -IncludeAllSubFeature
 
+Write-Host "Installing Role 'NET-Framework-45-Features'"
+Install-WindowsFeature NET-Framework-45-Features -IncludeAllSubFeature
+
 Write-Host "Installing Role 'Application-Server'"
 Install-WindowsFeature Application-Server -IncludeAllSubFeature
 
@@ -65,5 +68,4 @@ $cabinetStateKey = "$key\CabinetState"
 
 Set-ItemProperty -Path $advancedKey -Name HideFileExt -Value 0 -ErrorAction Ignore
 Set-ItemProperty -Path $advancedKey -Name Hidden -Value 1 -ErrorAction Ignore
-Set-ItemProperty -Path $advancedKey -Name ShowSuperHidden -Value 1 -ErrorAction Ignore
 Set-ItemProperty -Path $cabinetStateKey -Name FullPath -Value 1 -ErrorAction Ignore
