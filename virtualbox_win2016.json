@@ -1,0 +1,85 @@
+{
+    "builders":[
+        {
+            "name":"virtualbox-win2016-stage1-base",
+            "type":"virtualbox-iso",
+            "iso_url":"./iso/en_windows_server_2016_x64_dvd_9718492.iso",
+            "iso_checksum_type":"md5",
+            "iso_checksum":"e02d2e482b0f3dab915435e9040c13b4",
+            "headless":true,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown - Stage 1 complete\"",
+            "shutdown_timeout": "1h",
+            "guest_additions_mode" : "disable",
+            "guest_os_type":"Windows2012_64",
+            "disk_size":73728,
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"520m",
+            "floppy_files":[
+                "./answer_files/win2016/Autounattend.xml",
+                "./scripts/shared/base-image-setup.ps1"
+            ],
+            "vboxmanage":[
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--memory",
+                    "6144"
+                ],
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--cpus",
+                    "2"
+                ]
+            ]
+        },
+        {
+            "name":"virtualbox-win2016-stage2-devdesktop",
+            "type":"virtualbox-ovf",
+            "source_path":"./output-virtualbox-win2016-stage1-base/{{user `ovfsource`}}",
+            "headless":true,
+            "boot_wait":"2m",
+            "shutdown_command":"shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown - Stage 2 complete\"",
+            "shutdown_timeout": "1h",
+            "guest_additions_mode" : "disable",
+            "communicator":"winrm",
+            "winrm_username":"miranda",
+            "winrm_password":"miranda",
+            "winrm_port":"5985",
+            "winrm_timeout":"120m",
+            "vboxmanage":[
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--memory",
+                    "6144"
+                ],
+                [
+                    "modifyvm",
+                    "{{.Name}}",
+                    "--cpus",
+                    "2"
+                ]
+            ]
+        }
+    ],
+    "provisioners":[
+        {
+            "type":"powershell",
+            "only": ["virtualbox-win2016-stage2-devdesktop"],
+            "scripts":[
+                "./scripts/shared/create-d-partition.ps1",
+                "./scripts/shared/install-chocolatey.ps1",
+                "./scripts/shared/install-winfeatures.ps1",
+                "./scripts/virtualbox/install-dev-software.ps1"
+            ]
+        }
+    ],
+	"variables": {
+	    "ovfsource": "output-virtualbox-win2016-stage1-base/output-virtualbox-win2016-stage1-base.ovf"
+	}
+}
