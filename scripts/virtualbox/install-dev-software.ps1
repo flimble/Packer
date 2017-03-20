@@ -60,7 +60,7 @@ Write-Output "Installation finsihed! Process finished with return code: " $LastE
 choco install resharper-platform -y
 $resharperInstaller = Resolve-Path "$env:ChocolateyInstall\lib\resharper-platform\JetBrains.ReSharperUltimate.*.exe"
 Write-Output "Installing ReSharper Ultimate with lots of goodies: $resharperInstaller"
-Start-Process -FilePath "$resharperInstaller" -ArgumentList "/VsVersion=15.0_9a1f57d4;15.0 /SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait -PassThru # Remove 15.0_9a1f57d4 once RTM!
+Start-Process -FilePath "$resharperInstaller" -ArgumentList "/VsVersion=15.0_60fec802;15.0 /SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait -PassThru # Remove 15.0_60fec802 once RTM!
 
 choco install dotnetcore-sdk
 
