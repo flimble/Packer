@@ -62,6 +62,11 @@ $resharperInstaller = Resolve-Path "$env:ChocolateyInstall\lib\resharper-platfor
 Write-Output "Installing ReSharper Ultimate with lots of goodies: $resharperInstaller"
 Start-Process -FilePath "$resharperInstaller" -ArgumentList "/VsVersion=15.0_60fec802;15.0 /SpecificProductNames=ReSharper;dotTrace;dotCover;dotMemory;dotPeek /Silent=True" -Wait -PassThru # Remove 15.0_60fec802 once RTM!
 
+# VS 2017 doesn't install 4.6.2 on OSes < 10.0.14393. Exact error from VS log:
+# Marking package Microsoft.Net.4.6.2.SDK as not applicable due to reasons: The current OS Version '6.3.9600.0' is not in the supported version range '10.0.14393'.
+# Remove this if using WS-2016 
+choco install netfx-4.6.2-devpack
+
 choco install dotnetcore-sdk
 
 Write-Output "Ensuring password doesn't expire..."
