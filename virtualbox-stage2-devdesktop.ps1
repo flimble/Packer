@@ -4,7 +4,7 @@ if(-not $env:ChocolateyInstall -or -not (Test-Path "$env:ChocolateyInstall")){
 
 # specific versions due to bugs in 0.12.1
 choco install packer -y -version 0.12.0
-choco install VirtualBox -y -version 5.1.8.20161116
+choco install VirtualBox -y -version 5.1.26
 
 # Extra logging
 $env:PACKER_LOG=1
