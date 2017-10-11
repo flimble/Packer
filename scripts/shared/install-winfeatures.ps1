@@ -23,9 +23,6 @@ Install-WindowsFeature MSMQ -IncludeAllSubFeature
 Write-Host "Installing Role 'WAS'"
 Install-WindowsFeature WAS -IncludeAllSubFeature
 
-Write-Host "Installing Role 'Telnet Client'"
-Install-WindowsFeature TelnetClient -IncludeAllSubFeature
-
 #################################################################################
 # Install .NET 4.6.2 and ARR
 #################################################################################
