@@ -16,7 +16,7 @@ choco install nuget.commandline
 choco install microsoft-build-tools
 
 # SQL Tools
-choco install mssqlservermanagementstudio2014express
+#choco install mssqlservermanagementstudio2014express
 
 # Build & Visual Studio
 # if you get error 1603 then you are missing some windows updates

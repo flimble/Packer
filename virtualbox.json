@@ -12,7 +12,7 @@
             "shutdown_timeout": "1h",
             "guest_additions_mode" : "disable",
             "guest_os_type":"Windows2012_64",
-            "disk_size":62440,
+            "disk_size":"{{user `disksize`}}",
             "communicator":"winrm",
             "winrm_username":"miranda",
             "winrm_password":"miranda",
@@ -63,6 +63,34 @@
                     "{{.Name}}",
                     "--cpus",
                     "2"
+                ],
+                [
+                    "storageattach",
+                    "{{.Name}}",
+                    "--medium",
+                    "./iso/en_sql_server_2014_developer_edition_with_service_pack_2_x64_dvd_8967821.iso",
+                    "--type",
+                    "dvddrive",
+                    "--storagectl",
+                    "IDE Controller",
+                    "--port",
+                    "1",
+                    "--device",
+                    "0"                    
+                ]
+            ],
+            "vboxmanage_post":[
+                [
+                    "storageattach",
+                    "{{.Name}}",
+                    "--medium",
+                    "none",
+                    "--storagectl",
+                    "IDE Controller",
+                    "--port",
+                    "1",
+                    "--device",
+                    "0"             
                 ]
             ]
         }
@@ -74,8 +102,9 @@
             "scripts":[
                 "./scripts/shared/create-d-partition.ps1",
                 "./scripts/shared/install-chocolatey.ps1",
-                "./scripts/shared/install-winfeatures.ps1",
-                "./scripts/virtualbox/install-dev-software.ps1"
+                "./scripts/shared/install-winfeatures.ps1",                                
+                "./scripts/shared/install-sqlserver-2014.ps1",
+                "./scripts/virtualbox/install-dev-software.ps1"     
             ]
         }
     ],

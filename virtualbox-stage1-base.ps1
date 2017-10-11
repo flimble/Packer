@@ -11,7 +11,7 @@ $env:PACKER_LOG=1
 $env:PACKER_LOG_PATH="virtualbox-stage1.log"
 
 $start = get-date
-packer build -force -only="virtualbox-stage1-base" virtualbox.json
+packer build -force -only="virtualbox-stage1-base"  -var "disksize=112640" virtualbox.json
 
 $end = get-date
 $total = $end - $start
