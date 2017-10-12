@@ -8,7 +8,7 @@ function Install-SqlServer2014([string]$sqlinstaller, [string] $dbdir) {
     else {
       Write-Host "Installing SQL Server 2014 from $sqlinstaller"
       $adminsGroupName = (New-Object Security.Principal.SecurityIdentifier 'S-1-5-32-544').Translate([Security.Principal.NTAccount]).Value 
-      $sqlargs = "/q /INDICATEPROGRESS /ACTION=Install /UpdateEnabled=False /FEATURES=SQL,Tools /TCPENABLED=1 /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT=`"NT AUTHORITY\Network Service`" /SQLUSERDBDIR=`"${dbdir}:\SQL2014\DATA`" /SQLTEMPDBDIR=`"${dbdir}:\SQL2014\TEMP`" /SQLTEMPDBLOGDIR=`"${dbdir}:\SQL2014\LOG`"  /SQLSYSADMINACCOUNTS=`"$adminsGroupName`" /AGTSVCACCOUNT=`"NT AUTHORITY\Network Service`" /IACCEPTSQLSERVERLICENSETERMS"
+      $sqlargs = "/q /INDICATEPROGRESS /ACTION=Install /UpdateEnabled=False /FEATURES=SQL,Tools /TCPENABLED=1 /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT=`"NT AUTHORITY\Network Service`" /SQLUSERDBDIR=`"${dbdir}:\SQL2014\DATA`" /SQLTEMPDBDIR=`"${dbdir}:\SQL2014\TEMP`" /SQLTEMPDBLOGDIR=`"${dbdir}:\SQL2014\LOG`" /INSTANCEDIR=`"${dbdir}:\SQL2014\INSTANCE`"  /SQLSYSADMINACCOUNTS=`"$adminsGroupName`" /AGTSVCACCOUNT=`"NT AUTHORITY\Network Service`" /IACCEPTSQLSERVERLICENSETERMS"
             
       Start-ChocolateyProcessAsAdmin -statements $sqlargs -exeToRun $sqlinstaller      
     }
